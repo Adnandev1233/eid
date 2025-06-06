@@ -121,6 +121,19 @@
       left: 17px;
     }
 
+    .signature {
+      margin-top: 40px;
+      font-size: 1em;
+      color: #999;
+      font-style: italic;
+      opacity: 0;
+      transition: opacity 1.2s ease-out;
+    }
+
+    .signature.visible {
+      opacity: 1;
+    }
+
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-15px); }
@@ -156,6 +169,9 @@
     <div class="quote"> Wishing you and your family peace and happiness this Eid.</div>
     <div class="quote"> May this Eid bring joy and light into your home and heart.</div>
     <div class="quote"> Celebrate with love, kindness, and gratitude. Eid Mubarak!</div>
+
+    <!-- Signature -->
+    <p class="signature">Best wishes from Adnan.</p>
   </div>
 
   <!-- Scripts -->
@@ -174,14 +190,24 @@
 
     function revealQuotesOnScroll() {
       const quotes = document.querySelectorAll('.quote');
+      const signature = document.querySelector('.signature');
       const triggerPoint = window.innerHeight * 0.9;
+
+      let lastQuoteVisible = false;
 
       quotes.forEach(quote => {
         const rect = quote.getBoundingClientRect();
         if (rect.top < triggerPoint) {
           quote.classList.add('visible');
         }
+        if (quote === quotes[quotes.length - 1] && rect.top < triggerPoint) {
+          lastQuoteVisible = true;
+        }
       });
+
+      if (lastQuoteVisible) {
+        signature.classList.add('visible');
+      }
     }
 
     window.onload = () => {
